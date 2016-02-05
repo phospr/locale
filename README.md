@@ -1,5 +1,8 @@
 # Phospr\Locale
 
+[![Build Status](https://travis-ci.org/phospr/locale.svg)](https://travis-ci.org/phospr/locale)
+[![Coverage Status](https://coveralls.io/repos/github/phospr/locale/badge.svg)](https://coveralls.io/github/phospr/locale)
+
 Simple PHP Locale ValueObject
 
 ## Usage
