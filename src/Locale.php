@@ -95,6 +95,24 @@ class Locale
     }
 
     /**
+     * Compares two Locales
+     *
+     * @author Tom Haskins-Vaughan <tom@tomhv.uk>
+     * @since  1.0.0
+     *
+     * @param Locale $other
+     *
+     * @return bool
+     */
+    public function isSameValueAs(Locale $other)
+    {
+        return
+            $this->languageCode == $other->languageCode &&
+            $this->countryCode == $other->countryCode
+        ;
+    }
+
+    /**
      * From string
      *
      * @author Tom Haskins-Vaughan <tom@tomhv.uk>

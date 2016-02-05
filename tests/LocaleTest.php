@@ -60,4 +60,20 @@ class LocaleTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame('en_US', (string) $locale);
     }
+
+    /**
+     * Test isSameValueAs
+     *
+     * @author Tom Haskins-Vaughan <tom@tomhv.uk>
+     * @since  1.0.0
+     */
+    public function testIsSameValueAs()
+    {
+        $locale = Locale::fromString('eN_uS');
+        $other = Locale::fromString('EN_Us');
+        $yetAnother = Locale::fromString('Es_Us');
+
+        $this->assertTrue($locale->isSameValueAs($other));
+        $this->assertFalse($locale->isSameValueAs($yetAnother));
+    }
 }
