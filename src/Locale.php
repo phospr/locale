@@ -145,4 +145,21 @@ class Locale
 
         return new static($segments[1], $segments[0]);
     }
+
+    /**
+     * To countryCode/languageCode
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     *
+     * @return string countryCode/languageCode
+     */
+    public function toCountrySlashLanguage()
+    {
+        return sprintf(
+            '%s/%s',
+            $this->getCountryCode(),
+            $this->getLanguageCode()
+        );
+    }
 }
