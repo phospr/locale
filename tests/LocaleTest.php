@@ -76,4 +76,17 @@ class LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($locale->isSameValueAs($other));
         $this->assertFalse($locale->isSameValueAs($yetAnother));
     }
+
+    /**
+     * Test fromCountrySlashLanguage
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     */
+    public function testToCountrySlashLanguage()
+    {
+        $locale = Locale::fromCountrySlashLanguage('us/en');
+
+        $this->assertSame('US/en', $locale->toCountrySlashLanguage());
+    }
 }
