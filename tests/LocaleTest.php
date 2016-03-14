@@ -76,4 +76,79 @@ class LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($locale->isSameValueAs($other));
         $this->assertFalse($locale->isSameValueAs($yetAnother));
     }
+
+    /**
+     * Test format
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     *
+     * @dataProvider formatProvider
+     */
+    public function testFormat($locale, $format, $expected)
+    {
+        $this->assertSame($expected, $locale->format($format));
+    }
+
+    /**
+     * format Provider
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     *
+     * @return array
+     */
+    public static function formatProvider()
+    {
+        return [
+            [Locale::fromString('en_us'), '%c_%L', 'us_EN'],
+            [Locale::fromString('en_CA'), '%C_%L', 'CA_EN'],
+            [Locale::fromString('en_US'), '%c_%l', 'us_en'],
+            [Locale::fromString('EN_US'), '%c/%L', 'us/EN'],
+            [Locale::fromString('Es_mx'), '%C\%%L', 'MX%ES'],
+            [Locale::fromString('eN_uS'), '%C\%L', 'US%L'],
+            [Locale::fromString('en_us'), '%C\\\%L', 'US\EN'],
+            [Locale::fromString('en_Gb'), '%C\\:%L', 'GB:EN'],
+            [Locale::fromString('ru_RU'), '%C:%L', 'RU:RU'],
+            [Locale::fromString('en_us'), '%C\:%L', 'US:EN']
+        ];
+    }
+
+    /**
+     * Test formatException
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     *
+     * @expectedException InvalidArgumentException
+     *
+     * @dataProvider formatExceptionProvider
+     */
+    public function testFormatException($locale, $format)
+    {
+        $this->assertSame($locale->format($format));
+    }
+
+    /**
+     * formatException Provider
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     *
+     * @return array
+     */
+    public static function formatExceptionProvider()
+    {
+        return [
+            [Locale::fromString('ru_RU'), '%S_%L'],
+            [Locale::fromString('en_us'), '%C_%r'],
+            [Locale::fromString('en_us'), '%Cr%a'],
+            [Locale::fromString('en_us'), '%c_%J'],
+            [Locale::fromString('en_us'), '%\%/%L'],
+            [Locale::fromString('en_GB'), '%\%/%L'],
+            [Locale::fromString('en_AU'), '%\%/%L'],
+            [Locale::fromString('en_us'), 123432],
+            [Locale::fromString('en_us'), ['can', 'do', 'this']]
+        ];
+    }
 }

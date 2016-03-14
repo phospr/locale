@@ -9,6 +9,8 @@
 
 namespace Phospr;
 
+use InvalidArgumentException;
+
 /**
  * A Value Object representation of 5 character locale string:
  *
@@ -144,5 +146,88 @@ class Locale
         $segments = explode('/', $countrySlashLanguage);
 
         return new static($segments[1], $segments[0]);
+    }
+
+    /**
+     * From countryCode/languageCode
+     *
+     * The use of this code is as follows:
+     * $locale = Locale::fromString('se_FI');
+     * 'SE_fi' == $locale->format('%L_%c');
+     * 'FI/se' == $locale->format('%C/%s');
+     * 'fi/se' == $locale->format('%c/%s');
+     * 'fi\se' == $locale->format('%c\\\%s');
+     *
+     * Current translattable codes are:
+     *   * %L For uppercase language code
+     *   * %l For lowercase language code
+     *   * %C For uppercase country code
+     *   * %c For lowercase country code
+     *   * any other combination of %{:char:} will throw an
+     *     Invalid argument exception unless the % is escaped with \
+     *   * To get a \ You will need to double escape ( \\\ )
+     *
+     * @author Christopher Tatro <c.m.tatro@gmail.com>
+     * @since  1.0.0
+     *
+     * @param string $format
+     *
+     * @return string
+     */
+    public function format($format)
+    {
+        if (!is_string($format)) {
+            throw new InvalidArgumentException(sprintf(
+                'format passed must be a string'
+            ));
+        }
+
+        $translateNext = false;
+        $escNext = false;
+        $formatted = '';
+        foreach (str_split($format) as $char) {
+            if ($escNext) {
+                $formatted .= $char;
+                $escNext = false;
+                continue;
+            }
+
+            if ($translateNext) {
+                switch ($char) {
+                    case 'c':
+                        $translated = strtolower($this->getCountryCode());
+                        break;
+                    case 'C':
+                        $translated = strtoupper($this->getCountryCode());
+                        break;
+                    case 'l':
+                        $translated = strtolower($this->getLanguageCode());
+                        break;
+                    case 'L':
+                        $translated = strtoupper($this->getLanguageCode());
+                        break;
+                    default:
+                        throw new InvalidArgumentException(sprintf(
+                            'Unkown format'
+                        ));
+                }
+
+                $formatted .= $translated;
+                $translateNext = false;
+                continue;
+            }
+
+            if ('\\' == $char) {
+                $escNext = true;
+                continue;
+            } elseif ('%' == $char) {
+                $translateNext = true;
+                continue;
+            }
+
+            $formatted .= $char;
+        }
+
+        return $formatted;
     }
 }
