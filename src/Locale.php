@@ -156,7 +156,7 @@ class Locale
      * echo Locale::fromString('se_FI')->format('%c/%s'); // fi/se
      * echo Locale::fromString('se_FI')->format('%c\\\%s'); // fi\se
      *
-     * Current translattable codes are:
+     * Current formatting codes are:
      *
      *   * %L For uppercase language code
      *   * %l For lowercase language code
