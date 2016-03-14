@@ -15,6 +15,29 @@ echo Locale::fromCountrySlashLanguage('ca/fr'); // fr_CA
 
 ```
 
+### Formatting
+
+Use:
+
+- `%L` For uppercase language code
+- `%l` For lowercase language code
+- `%C` For uppercase country code
+- `%c` For lowercase country code
+
+Note:
+
+-   * any other combination of %{:char:} will throw an InvalidArgumentException unless the % is escaped with \
+-   * To get a \ You will need to double escape ( \\\ )
+
+Examples:
+
+```php
+echo Locale::fromString('se_FI')->format('%L_%c'); // SE_fi
+echo Locale::fromString('se_FI')->format('%C/%s'); // FI/se
+echo Locale::fromString('se_FI')->format('%c/%s'); // fi/se
+echo Locale::fromString('se_FI')->format('%c\\\%s'); // fi\se
+```
+
 ## Installation
 
 ```

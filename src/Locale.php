@@ -149,16 +149,15 @@ class Locale
     }
 
     /**
-     * From countryCode/languageCode
+     * Format Locale as string
      *
-     * The use of this code is as follows:
-     * $locale = Locale::fromString('se_FI');
-     * 'SE_fi' == $locale->format('%L_%c');
-     * 'FI/se' == $locale->format('%C/%s');
-     * 'fi/se' == $locale->format('%c/%s');
-     * 'fi\se' == $locale->format('%c\\\%s');
+     * echo Locale::fromString('se_FI')->format('%L_%c'); // SE_fi
+     * echo Locale::fromString('se_FI')->format('%C/%s'); // FI/se
+     * echo Locale::fromString('se_FI')->format('%c/%s'); // fi/se
+     * echo Locale::fromString('se_FI')->format('%c\\\%s'); // fi\se
      *
      * Current translattable codes are:
+     *
      *   * %L For uppercase language code
      *   * %l For lowercase language code
      *   * %C For uppercase country code
