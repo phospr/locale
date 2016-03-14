@@ -27,7 +27,7 @@ Use:
 Note:
 
 - any other combination of %{:char:} will throw an InvalidArgumentException unless the % is escaped with \
-- to get a \ You will need to double escape ( \\\ )
+- to get a `\` You will need to double escape ( `\\\` )
 
 Examples:
 
